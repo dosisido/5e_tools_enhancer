@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "5e Tools Enhancer",
-  "version": "0.2",
+  "version": "0.2.1",
   "description": "Enhances the 5e.tools website with additional features.",
   "icons": {
     "128": "favicon128.jpg"
@@ -14,10 +14,5 @@
       "matches": ["https://5e.tools/*"],
       "js": ["inject.js"]
     }
-  ],
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "5e_Tools_Enhancer@dosisido"
-    }
-  }
+  ]
 }

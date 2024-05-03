@@ -60,13 +60,30 @@ function executeOnTextNodes(element, callback) {
     }
 }
 
+
 function convertText(text) {
+    function convertFeetToMeters(feet) {
+        return Math.floor((feet / 5 * 1.5) * 100) / 100;
+    }
+    function convertPoundsToKg(pounds) {
+        return Math.floor(pounds / 2.20462);
+    }
+
+    text = text.replace(' ', ' ');
+
     const pattern_feet = /(\d{1,4})[ -]f[eo]{0,2}t/gmi;
     text = text.replace(pattern_feet, (match, value) => {
-        const meters = Math.floor(value / 5 * 1.5);
+        const meters = convertFeetToMeters(value);
         // const sep = (item.match.includes('-')) ? '-' : ' ';
         const sep = '';
         return `${meters}${sep}m`
+    });
+
+    const pattern_feet_between = /(\d{1,4})([ \-\w\D\/]{1,10}?)(\d{1,4})[\s\-]*?f[eo]{0,2}t\.?/gmi;
+    text = text.replace(pattern_feet_between, (match, value1, sep, value2) => {
+        const m1 = convertFeetToMeters(value1);
+        const m2 = convertFeetToMeters(value2);
+        return `${m1}${sep}${m2}kg`
     });
 
     const pattern_mile = /(\d{1,4})[ -]miles?/gmi;
@@ -75,16 +92,16 @@ function convertText(text) {
         return `${meters}km`
     });
 
-    const pattern_pounds_between = /(\d{1,4})([ \-\D]{0,10}?)(\d{1,4})[ -]pounds?/gmi;
+    const pattern_pounds_between = /(\d{1,4})([ \-\w]{0,10}?)(\d{1,4})[ -](?:pounds|lb)/gmi;
     text = text.replace(pattern_pounds_between, (match, value1, sep, value2) => {
-        const kg1 = Math.floor(value1 / 2.20462);
-        const kg2 = Math.floor(value2 / 2.20462);
+        const kg1 = convertPoundsToKg(value1);
+        const kg2 = convertPoundsToKg(value2);
         return `${kg1}${sep}${kg2}kg`
     });
 
-    const pattern_pounds = /(\d{1,4})[ -]pounds?/gmi;
+    const pattern_pounds = /(\d{1,4})[ -](?:pounds|lb)/gmi;
     text = text.replace(pattern_pounds, (match, value) => {
-        const kg = Math.floor(value / 2.20462);
+        const kg = convertPoundsToKg(value);
         return `${kg}kg`
     });
 
