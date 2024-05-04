@@ -66,7 +66,7 @@ function convertText(text) {
         return Math.floor((feet / 5 * 1.5) * 100) / 100;
     }
     function convertPoundsToKg(pounds) {
-        return Math.floor(pounds / 2.20462);
+        return Math.floor(pounds / 2.20462 * 100) / 100;
     }
 
     text = text.replace(' ', ' ');
@@ -88,7 +88,7 @@ function convertText(text) {
 
     const pattern_mile = /(\d{1,4})[ -]miles?/gmi;
     text = text.replace(pattern_mile, (match, value) => {
-        const meters = Math.floor(value * 1.609);
+        const meters = Math.floor(value * 1.609 * 100) / 100;
         return `${meters}km`
     });
 
