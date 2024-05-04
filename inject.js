@@ -1,13 +1,14 @@
-window.onload = function () {
 
-    // console.log('Extension loaded');
+async function main(){
+    await sleep(2 * 1000);
+    console.log('5e Tools Enhancer Extension loaded');
+
 
     const selectors = [
         "div.cancer__wrp-leaderboard",
         "body > div.viewport-wrapper > div > div.w-100.no-shrink"
     ];
     for(const selector of selectors){
-        console.log(selector)
         waitForElement(selector, 15)
             .then((element) => {
                 element.remove();
@@ -45,9 +46,8 @@ window.onload = function () {
     observer.observe(document.body, { attributes: true, childList: true, subtree: true });
 
     // observer.disconnect();
+}
     
-
-};
 
 
 function executeOnTextNodes(element, callback) {
@@ -125,3 +125,4 @@ function sleep(ms /* milliseconds */) {
 }
 
 const interval = 1.5 * 60 * 1000; // 1 minute e mezzo
+main(); 
